@@ -435,7 +435,21 @@ def release_pip():
 # ALGORITHM FOR RELEASE PROCESS:
 if __name__ == '__main__':
     print(('*** Current working directory:\n' + os.getcwd() + '\n'))
+    try:
     ensure_hub_is_installed()
+    # are we on a release branch already?
+    if not (current_branch()[:len(release_branch_prefix)] ==
+            release_branch_prefix):
+        if current_branch() == 'master':
+            release_pip()
+        else:
+            args = parser.parse_args()
+            init_release(args.part)
+    else:
+        finalise_release()
+except Exception as e:
+    print('Error in release process:', e)
+    raise EnvironmentError('An error occurred in the release process')
 
     # are we on a release branch already?
     if not (current_branch()[:len(release_branch_prefix)] ==
