@@ -41,7 +41,34 @@ def test_all():
         print('Error in test execution:', e)
         return 1
 
-if __name__ == '__main__':
+try:
+    if __name__ == '__main__':
+        # Wrap the existing logic from this line to the next block in the try block
+        branch = sbp.check_output(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"]).rstrip()
+
+        if branch == 'master' or branch == 'develop':
+            print(('\n' + 'X' * 66))
+            print ('You are trying to push to the master or develop branch.')
+            print ('Checking unit tests first...')
+            print(('X' * 66 + '\n'))
+
+            res = test_all()
+            if res == 0:
+                print(('\n' + 'X' * 66))
+                print ('Passed unit tests, proceeding.')
+                print(('X' * 66 + '\n'))
+            else:
+                print(('\n' + 'X' * 66))
+                print ('Failed unit tests, fix them before comitting. Aborting.')
+                print(('X' * 66 + '\n'))
+            sys.exit(res)
+        else:
+            # if not on develop or master: continue
+            sys.exit(0)
+except Exception as e:
+    print('Error in branch detection:', e)
+    sys.exit(1)
     # get the current branch name, strip trailing whitespaces using rstrip()
     branch = sbp.check_output(
         ["git", "rev-parse", "--abbrev-ref", "HEAD"]).rstrip()
