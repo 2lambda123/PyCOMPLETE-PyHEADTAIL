@@ -4,9 +4,9 @@ beam field expressions with static and adaptive approaches.
 @authors: Adrian Oeftiger
 @date: 24.03.2020
 """
-
 import numpy as np
-from scipy.constants import c, epsilon_0
+from scipy.constants import c
+from scipy.constants import epsilon_0
 
 import PyHEADTAIL.general.pmath as pm
 from PyHEADTAIL.spacecharge.spacecharge import TransverseGaussianSpaceCharge
