@@ -17,10 +17,10 @@ sqrt2pi = np.sqrt(2 * np.pi)
 class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
     """Analytic transverse space charge fields based on
     3D Gaussian distribution (Bassetti-Erskine formula).
-    
+
     Can track with respect to the bunch centroid and can cumulatively
     update transverse bunch size every n steps.
-    
+
     As opposed to self-consistent longitudinal line charge density
     through slicing in TransverseGaussianSpaceCharge class, this
     AnalyticTransverseGaussianSC class assumes a longitudinal Gaussian
@@ -100,14 +100,14 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
         the given longitudinal position z and total charge in
         the bunch total_charge (i.e.
         intensity * charge_per_particle) .
-        
+
         Assumes a Gaussian bunch profile.
-        
+
         Replace this function by another expression to change to
         an arbitrary longitudinal bunch profile.
 
-        :param z: 
-        :param total_charge: 
+        :param z:
+        :param total_charge:
 
         """
         return (
@@ -119,7 +119,7 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
     def track(self, beam):
         """
 
-        :param beam: 
+        :param beam:
 
         """
         n = self.update_every
@@ -165,10 +165,10 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
         two-dimensional Gaussian charge distribution according to
         M. Bassetti and G. A. Erskine in CERN-ISR-TH/80-06.
 
-        :param x: 
-        :param y: 
-        :param sig_x: 
-        :param sig_y: 
+        :param x:
+        :param y:
+        :param sig_x:
+        :param sig_y:
         :returns: Assumes sig_x > sig_y and mean_x == 0 as well as mean_y == 0.
         For convergence reasons of the erfc, use only x > 0 and y > 0.
         Uses CERN library from K. Koelbig.
