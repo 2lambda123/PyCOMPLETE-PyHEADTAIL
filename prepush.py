@@ -9,7 +9,12 @@ import sys
 
 def run():
     '''Run all tests for PyHEADTAIL here. Return success status.'''
-    return test_all() == 0
+    try:
+        test_result = test_all()
+        return 0 if test_result == 0 else 1
+    except Exception as e:
+        print('Error in test execution:', e)
+        return 1
 
 def test_all():
     # get the git root directory
@@ -29,7 +34,12 @@ def test_all():
     #    # pop the stash
     #    sbp.call(["git" , "stash", "pop", "-q"])
 
-    return res
+    try:
+        test_result = sbp.call(["python", fn_testsuite])
+        return 0 if test_result == 0 else 1
+    except Exception as e:
+        print('Error in test execution:', e)
+        return 1
 
 if __name__ == '__main__':
     # get the current branch name, strip trailing whitespaces using rstrip()
