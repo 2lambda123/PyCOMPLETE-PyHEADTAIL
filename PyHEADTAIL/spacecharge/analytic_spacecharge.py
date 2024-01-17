@@ -15,6 +15,7 @@ from PyHEADTAIL.spacecharge.spacecharge import (
 
 sqrt2pi = np.sqrt(2 * np.pi)
 
+
 class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
     '''Analytic transverse space charge fields based on
     3D Gaussian distribution (Bassetti-Erskine formula).
@@ -95,8 +96,8 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
         an arbitrary longitudinal bunch profile.
         '''
         return total_charge * pm.exp(
-                -z * z / (2 * self.sigma_z * self.sigma_z)
-            ) / (sqrt2pi * self.sigma_z)
+            -z * z / (2 * self.sigma_z * self.sigma_z)
+        ) / (sqrt2pi * self.sigma_z)
 
     def track(self, beam):
         n = self.update_every
