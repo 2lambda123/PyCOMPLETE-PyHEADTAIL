@@ -6,7 +6,6 @@ beam field expressions with static and adaptive approaches.
 """
 
 import numpy as np
-
 from scipy.constants import c, epsilon_0
 
 import PyHEADTAIL.general.pmath as pm
