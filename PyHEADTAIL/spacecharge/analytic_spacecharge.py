@@ -28,7 +28,6 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
 
 
     """
-
     "Horizontal closed orbit offset in case of wrt_centroid=False."
     x_co = 0
     "Vertical closed orbit offset in case of wrt_centroid=False."
@@ -36,17 +35,15 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
     "Longitudinal closed orbit offset in case of wrt_centroid=False."
     z_co = 0
 
-    def __init__(
-        self,
-        length,
-        sigma_x,
-        sigma_y,
-        sigma_z,
-        wrt_centroid=True,
-        update_every=None,
-        *args,
-        **kwargs
-    ):
+    def __init__(self,
+                 length,
+                 sigma_x,
+                 sigma_y,
+                 sigma_z,
+                 wrt_centroid=True,
+                 update_every=None,
+                 *args,
+                 **kwargs):
         """Initialise analytic Gaussian (Bassetti-Erskine)
         space charge element based on analytic 3D Gaussian
         formula.
@@ -110,11 +107,9 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
         :param total_charge:
 
         """
-        return (
-            total_charge
-            * pm.exp(-z * z / (2 * self.sigma_z * self.sigma_z))
-            / (sqrt2pi * self.sigma_z)
-        )
+        return (total_charge * pm.exp(-z * z /
+                                      (2 * self.sigma_z * self.sigma_z)) /
+                (sqrt2pi * self.sigma_z))
 
     def track(self, beam):
         """
@@ -137,9 +132,8 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
                 self._cum_sigma_y = 0
                 self._cum_sigma_z = 0
 
-        prefactor = (
-            beam.charge * self.length / (beam.p0 * beam.betagamma * beam.gamma * c)
-        )
+        prefactor = (beam.charge * self.length /
+                     (beam.p0 * beam.betagamma * beam.gamma * c))
 
         if self.wrt_centroid:
             mean_x = beam.mean_x()
@@ -150,11 +144,11 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
             mean_y = self.y_co
             mean_z = self.z_co
 
-        en_x, en_y = self.get_efieldn(
-            beam.x, beam.y, mean_x, mean_y, self.sigma_x, self.sigma_y
-        )
+        en_x, en_y = self.get_efieldn(beam.x, beam.y, mean_x, mean_y,
+                                      self.sigma_x, self.sigma_y)
 
-        lmbda = self.compute_lambda(beam.z - mean_z, beam.intensity * beam.charge)
+        lmbda = self.compute_lambda(beam.z - mean_z,
+                                    beam.intensity * beam.charge)
 
         beam.xp += (lmbda * en_x) * prefactor
         beam.yp += (lmbda * en_y) * prefactor
@@ -176,9 +170,9 @@ class AnalyticTransverseGaussianSC(TransverseGaussianSpaceCharge):
         """
         sig_sqrt = TransverseGaussianSpaceCharge._sig_sqrt(sig_x, sig_y)
         w1re, w1im = pm.wofz(x / sig_sqrt, y / sig_sqrt)
-        ex = pm.exp(-x * x / (2 * sig_x * sig_x) + -y * y / (2 * sig_y * sig_y))
-        w2re, w2im = pm.wofz(
-            x * sig_y / (sig_x * sig_sqrt), y * sig_x / (sig_y * sig_sqrt)
-        )
+        ex = pm.exp(-x * x / (2 * sig_x * sig_x) + -y * y /
+                    (2 * sig_y * sig_y))
+        w2re, w2im = pm.wofz(x * sig_y / (sig_x * sig_sqrt),
+                             y * sig_x / (sig_y * sig_sqrt))
         pref = 1.0 / (2 * epsilon_0 * np.sqrt(np.pi) * sig_sqrt)
         return (w1im - ex * w2im) * pref, (w1re - ex * w2re) * pref
