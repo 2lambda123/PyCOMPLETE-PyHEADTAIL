@@ -16,7 +16,7 @@ Conforms with PEP440 (especially the versioning needs to follow this).
 
 import argparse
 import importlib # available from PyPI for Python <2.7
-import os, subprocess
+import os, import subprocessess
 
 # python2/3 compatibility for raw_input/input:
 if hasattr(__builtins__, 'raw_input'):
@@ -332,6 +332,8 @@ def init_release(part):
     print ('\n*** Initiated the release process. When you are ready to publish '
            'the release, run this command again.')
     print ('\n\n*** Do not forget to review the pull request on github.com!')
+           'the release, run this command again.')
+    print ('\n\n*** Do not forget to review the pull request on github.com!')
 
 def finalise_release():
     '''Finalise release process.'''
@@ -405,7 +407,12 @@ def finalise_release():
 def release_pip():
     '''Release current version from master branch to PyPI.'''
     if is_worktree_dirty():
-        git_status()
+        def git_status():
+    '''Print git status output'''
+    output = subprocess.check_output([
+        'git', 'status', 'HEAD'
+    ])
+    print(output)
         raise EnvironmentError('Release process can only be initiated on '
                                'a clean git repository. You have uncommitted '
                                'changes in your files, please fix this first.')

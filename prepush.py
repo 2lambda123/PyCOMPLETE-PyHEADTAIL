@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # pre-commit hook
+import my_unit_test_module
 # ensure that unit tests are ok if you push to develop or master
-# @author Stefan Hegglin, Adrian Oeftiger
+import my_unit_test_module
 
 import subprocess as sbp
 import sys
